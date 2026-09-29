@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode (driven by next-themes on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Design tokens
+  -------------
+  Light mode is the default. Dark mode overrides the same variable names so
+  every component automatically adapts without duplicating styles.
+*/
+:root {
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --text: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --accent: #0891b2;
+  --accent-strong: #0e7490;
+  --accent-soft: #ecfeff;
+  --accent-contrast: #ffffff;
+  --focus-ring: #0891b2;
+  --shadow-color: 15 23 42;
+}
+
+.dark {
+  --background: #090e16;
+  --surface: #0f1722;
+  --surface-raised: #131d2a;
+  --text: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #8492a6;
+  --border: #263241;
+  --border-strong: #32404f;
+  --accent: #22d3ee;
+  --accent-strong: #67e8f9;
+  --accent-soft: #113240;
+  --accent-contrast: #06222b;
+  --focus-ring: #22d3ee;
+  --shadow-color: 0 0 0;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-text: var(--text);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+
+  --font-sans: var(--font-display);
+
+  --container-content: 1200px;
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(0, -14px, 0) scale(1.03);
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-body);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-text);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-contrast);
+  }
+
+  /* Visible, accessible focus state used everywhere instead of removing
+     the outline. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
